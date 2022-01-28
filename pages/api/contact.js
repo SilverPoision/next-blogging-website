@@ -27,11 +27,13 @@ const handler = async (req, res) => {
 
     let client;
 
+    const connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_cluster}.ml4hu.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
+
     try {
-      client = await MongoClient.connect(
-        "mongodb+srv://silverpoision:Silver%401671@cluster0.ml4hu.mongodb.net/blog?retryWrites=true&w=majority",
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
+      client = await MongoClient.connect(connectionString, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
     } catch (err) {
       if (err) {
         return res.status(500).json({
